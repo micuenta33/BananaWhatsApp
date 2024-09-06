@@ -19,12 +19,12 @@ public class Mensaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @Column(name = "remitente")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "remitente_id")
     private Usuario remitente;
 
-    @ManyToOne
-    @Column(name = "destinatario")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "destinatario_id")
     private Usuario destinatario;
 
     private String cuerpo;

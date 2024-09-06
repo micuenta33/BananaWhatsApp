@@ -1,13 +1,21 @@
 package com.banana.bananawhatsapp.persistencia;
 
-import com.banana.bananawhatsapp.exceptions.MensajeException;
+import com.banana.bananawhatsapp.config.SpringConfig;
 import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Mensaje;
 import com.banana.bananawhatsapp.modelos.Usuario;
+import com.banana.bananawhatsapp.persistencia.mensajes.IMensajeRepository;
+import com.banana.bananawhatsapp.persistencia.usuarios.IUsuarioRepository;
 import com.banana.bananawhatsapp.util.DBUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,20 +25,25 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {SpringConfig.class})
+@EnableAutoConfiguration
 class MensajeRepositoryTest {
 
+    @Autowired
     IUsuarioRepository repoUsuario;
 
+    @Autowired
     IMensajeRepository repoMensaje;
 
-    @BeforeEach
-    void cleanAndReloadData() {
-        DBUtil.reloadDB();
-    }
+//    @BeforeEach
+//    void cleanAndReloadData() {
+//        DBUtil.reloadDB();
+//    }
 
     @Test
     @Order(1)
+    @Transactional
     void dadoUnMensajeValido_cuandoCrear_entoncesMensajeValido() throws Exception {
         Usuario remitente = repoUsuario.obtener(1);
         Usuario destinatario = repoUsuario.obtener(2);

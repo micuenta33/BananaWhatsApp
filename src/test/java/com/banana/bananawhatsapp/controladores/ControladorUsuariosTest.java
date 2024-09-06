@@ -2,7 +2,7 @@ package com.banana.bananawhatsapp.controladores;
 
 import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Usuario;
-import com.banana.bananawhatsapp.persistencia.IUsuarioRepository;
+import com.banana.bananawhatsapp.persistencia.usuarios.IUsuarioRepository;
 import com.banana.bananawhatsapp.util.DBUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

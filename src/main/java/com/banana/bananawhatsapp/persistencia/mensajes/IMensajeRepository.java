@@ -1,4 +1,4 @@
-package com.banana.bananawhatsapp.persistencia;
+package com.banana.bananawhatsapp.persistencia.mensajes;
 
 import com.banana.bananawhatsapp.modelos.Mensaje;
 import com.banana.bananawhatsapp.modelos.Usuario;
