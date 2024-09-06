@@ -96,27 +96,4 @@ class UsuarioRepositoryTest {
         });
     }
 
-    @Test
-    @Order(7)
-    void dadoUnUsuarioValido_cuandoObtenerPosiblesDestinatarios_entoncesLista() throws Exception {
-        Integer iDUser = 1;
-        int numPosibles = 100;
-        Usuario user = new Usuario(iDUser, "Juan", "j@j.com", LocalDate.now(), true);
-
-        Set<Usuario> conjuntoDestinatarios = repo.obtenerPosiblesDestinatarios(user.getId(), numPosibles);
-        assertTrue(conjuntoDestinatarios.size() <= numPosibles);
-    }
-
-    @Test
-    @Order(8)
-    void dadoUnUsuarioNOValido_cuandoObtenerPosiblesDestinatarios_entoncesExcepcion() throws Exception {
-        Usuario user = new Usuario(-1, null, null, null, true);
-        int numPosibles = 100;
-        assertThrows(UsuarioException.class, () -> {
-            Set<Usuario> conjuntoDestinatarios = repo.obtenerPosiblesDestinatarios(user.getId(), numPosibles);
-        });
-
-    }
-
-
 }

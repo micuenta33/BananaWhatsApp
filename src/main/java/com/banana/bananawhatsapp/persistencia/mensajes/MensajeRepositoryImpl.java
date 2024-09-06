@@ -20,19 +20,14 @@ public class MensajeRepositoryImpl implements IMensajeRepository {
         return repository.save(mensaje);
     }
 
-    @Override
-    public List<Mensaje> obtener(Usuario usuario) throws SQLException {
-//        List<Mensaje> mensaje = repository.findByRemitenteOrDestinatario(usuario);
-        return null;
-    }
 
     @Override
     public boolean borrarEntre(Usuario remitente, Usuario destinatario) throws Exception {
-        return false;
-    }
-
-    @Override
-    public boolean borrarTodos(Usuario usuario) throws SQLException {
+        List<Mensaje> mensajesList = repository.findByRemitenteAndDestinatario(remitente, destinatario);
+        if (mensajesList.size() > 0) {
+            repository.deleteAll(mensajesList);
+            return true;
+        }
         return false;
     }
 

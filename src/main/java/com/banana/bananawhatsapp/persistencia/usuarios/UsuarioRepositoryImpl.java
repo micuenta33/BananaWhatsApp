@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
-import java.util.Set;
+
 
 @Repository
 public class UsuarioRepositoryImpl implements IUsuarioRepository {
@@ -27,16 +27,19 @@ public class UsuarioRepositoryImpl implements IUsuarioRepository {
 
     @Override
     public Usuario actualizar(Usuario usuario) {
-        return usuarioRepositoryMySQL.save(usuario);
+        if (usuarioRepositoryMySQL.existsById(usuario.getId())){
+            return usuarioRepositoryMySQL.save(usuario);
+        }
+        throw new UsuarioException("Usuario no encontrado");
     }
 
     @Override
-    public boolean borrar(Usuario usuario) throws SQLException {
+    public boolean borrar(Usuario usuario)  {
+        if(usuarioRepositoryMySQL.existsById(usuario.getId())){
+            usuarioRepositoryMySQL.delete(usuario);
+            return true;
+        }
         return false;
     }
 
-    @Override
-    public Set<Usuario> obtenerPosiblesDestinatarios(Integer id, Integer max) throws SQLException {
-        return null;
-    }
 }

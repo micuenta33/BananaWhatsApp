@@ -1,15 +1,17 @@
-package com.banana.bananawhatsapp.servicios;
+package com.banana.bananawhatsapp.servicios.impl;
 
 import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Usuario;
 import com.banana.bananawhatsapp.persistencia.usuarios.IUsuarioRepository;
+import com.banana.bananawhatsapp.servicios.IServicioUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Set;
 @Service
-public class IServicioUsuariosImpl implements IServicioUsuarios{
+public class IServicioUsuariosImpl implements IServicioUsuarios {
     @Autowired
     private IUsuarioRepository usuarioRepository;
 
@@ -29,7 +31,10 @@ public class IServicioUsuariosImpl implements IServicioUsuarios{
 
     @Override
     public boolean borrarUsuario(Usuario usuario) throws UsuarioException {
-        return false;
+        if(usuarioRepository.borrar(usuario)){
+            return true;
+        }
+        throw new UsuarioException("Usuario no encontrado");
     }
 
     @Override
@@ -40,8 +45,5 @@ public class IServicioUsuariosImpl implements IServicioUsuarios{
         return usuarioRepository.actualizar(usuario);
     }
 
-    @Override
-    public Set<Usuario> obtenerPosiblesDesinatarios(Usuario usuario, int max) throws UsuarioException {
-        return null;
-    }
+
 }

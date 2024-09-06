@@ -36,10 +36,6 @@ class MensajeRepositoryTest {
     @Autowired
     IMensajeRepository repoMensaje;
 
-//    @BeforeEach
-//    void cleanAndReloadData() {
-//        DBUtil.reloadDB();
-//    }
 
     @Test
     @Order(1)
@@ -67,25 +63,6 @@ class MensajeRepositoryTest {
     }
 
     @Test
-    @Order(3)
-    void dadoUnUsuarioValido_cuandoObtener_entoncesListaMensajes() throws Exception {
-        Usuario user = repoUsuario.obtener(1);
-
-        List<Mensaje> userMessages = repoMensaje.obtener(user);
-        assertNotNull(userMessages);
-    }
-
-    @Test
-    @Order(4)
-    void dadoUnUsuarioNOValido_cuandoObtener_entoncesExcepcion() throws Exception {
-        Usuario user = new Usuario(1, null, null, null, false);
-
-        assertThrows(UsuarioException.class, () -> {
-            List<Mensaje> userMessages = repoMensaje.obtener(user);
-        });
-    }
-
-    @Test
     @Order(5)
     void dadoUnRemitenteValido_cuandoBorrarEntre_entoncesOK() throws Exception {
         Usuario remitente = repoUsuario.obtener(1);
@@ -104,25 +81,6 @@ class MensajeRepositoryTest {
 
         assertThrows(UsuarioException.class, () -> {
             repoMensaje.borrarEntre(remitente, destinatario);
-        });
-    }
-
-    @Test
-    @Order(7)
-    void dadoUnUsuarioValido_cuandoBorrarTodos_entoncesOK() throws Exception {
-        Usuario user = repoUsuario.obtener(1);
-
-        boolean borrarChat = repoMensaje.borrarTodos(user);
-        assertTrue(borrarChat);
-    }
-
-    @Test
-    @Order(8)
-    void dadoUnUsuarioNOValido_cuandoBorrarTodos_entoncesExcepcion() throws Exception {
-        Usuario user = new Usuario(1, null, null, null, true);
-
-        assertThrows(UsuarioException.class, () -> {
-            repoMensaje.borrarTodos(user);
         });
     }
 

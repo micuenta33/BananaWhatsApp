@@ -1,4 +1,4 @@
-package com.banana.bananawhatsapp.servicios;
+package com.banana.bananawhatsapp.servicios.impl;
 
 import com.banana.bananawhatsapp.exceptions.MensajeException;
 import com.banana.bananawhatsapp.exceptions.UsuarioException;
@@ -6,6 +6,7 @@ import com.banana.bananawhatsapp.modelos.Mensaje;
 import com.banana.bananawhatsapp.modelos.Usuario;
 import com.banana.bananawhatsapp.persistencia.mensajes.IMensajeRepository;
 import com.banana.bananawhatsapp.persistencia.usuarios.IUsuarioRepository;
+import com.banana.bananawhatsapp.servicios.IServicioMensajeria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class IServicioMensajeriaImpl implements IServicioMensajeria  {
+public class IServicioMensajeriaImpl implements IServicioMensajeria {
     @Autowired
     private IMensajeRepository mensajeRepository;
     @Autowired
@@ -55,6 +56,13 @@ public class IServicioMensajeriaImpl implements IServicioMensajeria  {
 
     @Override
     public boolean borrarChatConUsuario(Usuario remitente, Usuario destinatario) throws UsuarioException, MensajeException {
-        return false;
+        try {
+            if (usuarioRepository.obtener(remitente.getId())==null || usuarioRepository.obtener(destinatario.getId())==null){
+                throw new UsuarioException("No se puede borrar el chat con un usuario inexistente");
+            }
+            return mensajeRepository.borrarEntre(remitente, destinatario);
+        } catch (Exception e) {
+           throw new MensajeException("No se pudo borrar el chat");
+        }
     }
 }
