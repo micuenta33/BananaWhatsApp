@@ -1,5 +1,6 @@
 package com.banana.bananawhatsapp.persistencia.mensajes;
 
+import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Mensaje;
 import com.banana.bananawhatsapp.modelos.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,10 @@ public class MensajeRepositoryImpl implements IMensajeRepository {
 
     @Override
     public List<Mensaje> obtener(Usuario usuario) throws SQLException {
-//        List<Mensaje> mensaje = repository.findByRemitenteOrDestinatario(usuario);
-        return null;
+        if(!usuario.valido()){
+            throw new UsuarioException("Usuario invalido");
+        }
+        return repository.findByUsuario_remitenteOrUsuario_destinatario(usuario.getId());
     }
 
     @Override
