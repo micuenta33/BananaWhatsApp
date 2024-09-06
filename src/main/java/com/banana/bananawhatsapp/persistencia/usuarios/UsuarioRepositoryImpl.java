@@ -1,5 +1,6 @@
 package com.banana.bananawhatsapp.persistencia.usuarios;
 
+import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.modelos.Usuario;
 import com.banana.bananawhatsapp.persistencia.usuarios.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,17 @@ public class UsuarioRepositoryImpl implements IUsuarioRepository {
 
     @Override
     public Usuario obtener(int id) throws SQLException {
-        return usuarioRepositoryMySQL.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return usuarioRepositoryMySQL.findById(id).orElseThrow(() -> new UsuarioException("Usuario no encontrado"));
     }
 
     @Override
-    public Usuario crear(Usuario usuario) throws SQLException {
+    public Usuario crear(Usuario usuario) {
         return  usuarioRepositoryMySQL.save(usuario);
     }
 
     @Override
-    public Usuario actualizar(Usuario usuario) throws SQLException {
-        return null;
+    public Usuario actualizar(Usuario usuario) {
+        return usuarioRepositoryMySQL.save(usuario);
     }
 
     @Override

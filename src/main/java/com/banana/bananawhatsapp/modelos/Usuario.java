@@ -41,6 +41,6 @@ public class Usuario {
                 && validarEmail()
                 && validarAlta()
         ) return true;
-        else throw new UsuarioException("Usuario no valido");
+        return false;
     }
 }

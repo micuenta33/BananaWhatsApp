@@ -14,4 +14,7 @@ public interface MensajeRepositoryMySQL extends JpaRepository<Mensaje, Integer> 
 
     @Query(value = "SELECT * FROM mensaje WHERE (remitente_id = :usuario) or (destinatario_id = :usuario)", nativeQuery = true)
     List<Mensaje> findByUsuario_remitenteOrUsuario_destinatario(@Param("usuario") Integer idUsuario);
+
+    @Query("SELECT m FROM Mensaje m WHERE m.remitente = ?1 AND m.destinatario =?2")
+    List<Mensaje> findByRemitenteAndDestinatario(@Param("remitente") Usuario remitente, @Param("destinatario")Usuario destinatario);
 }
