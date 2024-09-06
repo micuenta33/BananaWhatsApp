@@ -16,7 +16,7 @@ public class MensajeRepositoryImpl implements IMensajeRepository {
     private MensajeRepositoryMySQL repository;
 
     @Override
-    public Mensaje crear(Mensaje mensaje) throws SQLException {
+    public Mensaje crear(Mensaje mensaje) {
         return repository.save(mensaje);
     }
 
@@ -34,5 +34,10 @@ public class MensajeRepositoryImpl implements IMensajeRepository {
     @Override
     public boolean borrarTodos(Usuario usuario) throws SQLException {
         return false;
+    }
+
+    @Override
+    public List<Mensaje> obtenerEntre(Usuario remitente, Usuario destinatario) {
+        return repository.findByRemitenteAndDestinatario(remitente, destinatario);
     }
 }

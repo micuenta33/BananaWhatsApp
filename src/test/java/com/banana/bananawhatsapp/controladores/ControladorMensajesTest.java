@@ -1,6 +1,7 @@
 package com.banana.bananawhatsapp.controladores;
 
 import com.banana.bananawhatsapp.config.SpringConfig;
+import com.banana.bananawhatsapp.exceptions.UsuarioException;
 import com.banana.bananawhatsapp.persistencia.usuarios.IUsuarioRepository;
 import com.banana.bananawhatsapp.util.DBUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,7 +53,9 @@ class ControladorMensajesTest {
     void dadoRemitenteYDestinatarioValidos_cuandoMostrarChat_entoncesOK() {
         Integer remitente = 1;
         Integer destinatario = 2;
+
         boolean mostrarChat = controladorMensajes.mostrarChat(remitente, destinatario);
+
         assertTrue(mostrarChat);
     }
 
@@ -60,7 +63,7 @@ class ControladorMensajesTest {
     void dadoRemitenteYDestinatarioNOValidos_cuandoMostrarChat_entoncesExcepcion() {
         Integer remitente = 2;
         Integer destinatario = -1;
-        assertThrows(Exception.class, () -> {
+        assertThrows(UsuarioException.class, () -> {
             controladorMensajes.mostrarChat(remitente, destinatario);
         });
     }
